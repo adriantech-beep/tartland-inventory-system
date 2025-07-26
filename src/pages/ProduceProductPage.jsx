@@ -1,4 +1,4 @@
-import ProduceProduct from "../produce-product/Produceproduct";
+import ProduceProduct from "../produce-product/ProduceProduct";
 
 const ProduceProductPage = () => {
   return <ProduceProduct />;
