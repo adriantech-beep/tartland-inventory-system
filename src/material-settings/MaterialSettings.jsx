@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useMaterialSettings } from "./useMaterialSettings";
 import { useDeleteMaterialSetting } from "./useDeleteMaterialSettings";
-import { useCreateMaterialSettings } from "./useCreatematerialSettings";
 import { SlidersHorizontal } from "lucide-react";
 import { useEditMaterialSettings } from "./useEditMaterialSettings";
 import Select from "../components/Select";
@@ -9,6 +8,7 @@ import { rawMaterial } from "../constant/rawMaterial";
 import { toast } from "react-toastify";
 import { materialSettingsHeadings } from "../constant/materialSettingsHeadings";
 import TableHead from "../components/TableHead";
+import { useCreateMaterialSettings } from "./useCreateMaterialSettings";
 
 const MaterialSettings = () => {
   const [form, setForm] = useState({
