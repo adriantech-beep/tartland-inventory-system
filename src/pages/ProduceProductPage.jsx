@@ -1,7 +1,7 @@
-import ProduceProduct from "../produce-product/ProduceProduct";
+import Produce from "../produce-product/Produce";
 
 const ProduceProductPage = () => {
-  return <ProduceProduct />;
+  return <Produce />;
 };
 
 export default ProduceProductPage;
