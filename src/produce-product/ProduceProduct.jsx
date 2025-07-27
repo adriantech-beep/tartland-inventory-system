@@ -10,7 +10,7 @@ import { dateFormatter } from "../helpers/dateFormatter";
 import { useDeleteProductionLog } from "./useDeleteProductionLog";
 import { useEditProductionLog } from "./useEditProduction";
 
-const Produce = () => {
+const ProduceProduct = () => {
   const [editId, setEditId] = useState(null);
   const { data: summary = [] } = useGetSummaryTotal();
   const { data: mixtures = [] } = useGetMixtureRule();
@@ -266,4 +266,4 @@ const Produce = () => {
   );
 };
 
-export default Produce;
+export default ProduceProduct;
