@@ -2,6 +2,7 @@ import DashboardMetrics from "../produced-inventory/DashboardMetrics";
 import LowStockProduct from "../stocks-inventory/LowStockProduct";
 import StockCount from "../stocks-inventory/StockCount";
 import Welcome from "../components/Welcome";
+import MonthlySalesSummary from "../sales-data/MonthlySalesSummary";
 
 const Dashboard = () => {
   return (
@@ -12,6 +13,9 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <StockCount />
         <LowStockProduct />
+      </div>
+      <div>
+        <MonthlySalesSummary />
       </div>
     </div>
   );
