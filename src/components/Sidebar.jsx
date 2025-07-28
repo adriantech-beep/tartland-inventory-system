@@ -30,7 +30,11 @@ const Sidebar = ({ isOpen }) => {
         <SidebarItem to="/" icon={LayoutDashboard} label="Dashboard" />
         <SidebarItem to="/orders" icon={ListOrdered} label="Orders" />
         <SidebarItem to="/products" icon={Candy} label="Products" />
-        <SidebarItem to="/add-product" icon={BadgePlus} label="Add Product" />
+        <SidebarItem
+          to="/add-product"
+          icon={BadgePlus}
+          label="Add Raw Materials"
+        />
         <SidebarItem
           to="/produce"
           icon={PackageSearch}
