@@ -7,7 +7,7 @@ import { useGetProductionLog } from "./useGetProductionLog";
 import TableHead from "../components/TableHead";
 import { useDeleteProductionLog } from "./useDeleteProductionLog";
 import { useEditProductionLog } from "./useEditProduction";
-import ProductionLogTable from "./ProductionLogtable";
+import ProductionLogTable from "./ProductionLogTable";
 import { productionLogsHeadings } from "../constant/productionLogsHeadings";
 import StockSummary from "./StockSummarry";
 
