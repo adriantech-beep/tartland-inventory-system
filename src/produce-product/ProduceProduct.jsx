@@ -4,11 +4,12 @@ import { useGetSummaryTotal } from "../stocks-inventory/useGetSummaryTotal";
 import { useGetMixtureRule } from "../mixture-settings/useGetMixtureRule";
 import { useCreateProduction } from "./useCreateProduction";
 import { useGetProductionLog } from "./useGetProductionLog";
-import { productionLogsHeadings } from "../constant/productionLogsHeadings";
 import TableHead from "../components/TableHead";
-import { dateFormatter } from "../helpers/dateFormatter";
 import { useDeleteProductionLog } from "./useDeleteProductionLog";
 import { useEditProductionLog } from "./useEditProduction";
+import ProductionLogTable from "./ProductionLogtable";
+import { productionLogsHeadings } from "../constant/productionLogsHeadings";
+import StockSummary from "./StockSummarry";
 
 const ProduceProduct = () => {
   const [editId, setEditId] = useState(null);
@@ -22,8 +23,6 @@ const ProduceProduct = () => {
   const sortedSummary = [...summary].sort((a, b) =>
     a.name.localeCompare(b.name)
   );
-
-  console.log(productionLog);
 
   const mixtureOptions = mixtures.map((mix) => ({
     value: mix.id,
@@ -83,8 +82,8 @@ const ProduceProduct = () => {
     const totalJarsUsed = parseFloat(
       (totalJars / jarMaterial.perBox).toFixed(2)
     );
-    // ✅ No division! Just use `totalJars` directly
-    const jarsUsed = parseFloat(totalJars.toFixed(1)); // this will be subtracted from totalUnits (which is in jars)
+
+    const jarsUsed = parseFloat(totalJars.toFixed(1));
     const fullBoxesUsed = Math.floor(jarsUsed / jarMaterial.perBox);
     const leftoverJars = +(jarsUsed % jarMaterial.perBox).toFixed(1);
     const leftoverBoxFraction = +(leftoverJars / jarMaterial.perBox).toFixed(2);
@@ -102,7 +101,6 @@ const ProduceProduct = () => {
       leftoverJars,
     });
 
-    // 5. Final payload
     const payload = {
       flavor: mixtureRule.flavor,
       mixtureCount: userMixtureCount,
@@ -170,24 +168,7 @@ const ProduceProduct = () => {
           />
         </div>
 
-        <div className="bg-white shadow-md rounded-xl p-4 border border-stone-200">
-          <h4 className="text-sm font-semibold text-stone-700 mb-3 flex items-center gap-1">
-            <span>📊</span> <span>Current Stock Summary</span>
-          </h4>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-stone-700">
-            {sortedSummary.map((stock) => (
-              <div
-                key={stock._id}
-                className="flex justify-between items-center bg-stone-50 p-2 rounded-md border border-stone-200"
-              >
-                <span className="truncate">{stock.name}</span>
-                <span className="font-semibold text-stone-800">
-                  {stock.totalUnits.toFixed(2)} units
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
+        <StockSummary sorted={sortedSummary} />
 
         <button
           onClick={handleProduce}
@@ -205,62 +186,41 @@ const ProduceProduct = () => {
           </button>
         )}
       </form>
-
-      <div className="overflow-x-auto border rounded-md bg-white shadow-lg">
-        {isLoading ? (
-          <p>Loading production logs...</p>
-        ) : productionLog.length === 0 ? (
-          <p className="p-4 text-sm text-gray-600">No production logs found.</p>
-        ) : (
-          <table className="min-w-full text-sm">
-            <thead className="bg-blue-100 text-gray-700">
-              <tr>
-                {productionLogsHeadings.map((name, i) => (
-                  <TableHead name={name} key={i} />
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {productionLog.map((production) => (
-                <tr
-                  key={production.id}
-                  className="border-t hover:bg-gray-100 border-b border-stone-300"
-                >
-                  <td className="p-2 text-stone-900 ">
-                    {dateFormatter(production.createdAt)}
-                  </td>
-                  <td className="p-2 text-stone-900 font-medium">
-                    {production.flavor}
-                  </td>
-                  <td className="p-2 text-stone-900 ">
-                    {production.mixtureCount}
-                  </td>
-                  <td className="p-2 text-stone-900 ">
-                    {production.totalBundles}
-                  </td>
-                  <td className="p-2 text-stone-900 ">
-                    {production.totalJars}
-                  </td>
-
-                  <td className="p-2 space-x-2">
-                    <button
-                      onClick={() => handleEdit?.(production)}
-                      className="text-blue-600 hover:underline text-sm"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => deleteProduction?.(production.id)}
-                      className="text-red-600 hover:underline text-sm"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
+      <div className="w-full overflow-x-auto border rounded-md bg-white shadow-lg">
+        <table className="w-full text-sm border-collapse">
+          <thead className="bg-blue-100 text-gray-700">
+            <tr>
+              {productionLogsHeadings.map((name, i) => (
+                <TableHead name={name} key={i} />
               ))}
-            </tbody>
-          </table>
-        )}
+            </tr>
+          </thead>
+
+          <tbody>
+            {isLoading ? (
+              <tr>
+                <td colSpan={6} className="text-center p-4">
+                  Loading production logs...
+                </td>
+              </tr>
+            ) : productionLog.length === 0 ? (
+              <tr>
+                <td colSpan={6} className="text-center p-4">
+                  No data found
+                </td>
+              </tr>
+            ) : (
+              productionLog.map((production) => (
+                <ProductionLogTable
+                  key={production._id}
+                  production={production}
+                  handleEdit={handleEdit}
+                  deleteProduction={deleteProduction}
+                />
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );
