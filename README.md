@@ -16,10 +16,7 @@ A full-stack production tracking system designed to manage product output based 
 - Tracks exact grams used and leftover bags.
 - Jar deduction is based on total grams used (e.g., 11.31 jars per mixture × 70g = ~792 jars).
 
-### 🗑️ Restore on Deletion
-- When a production log is deleted:
-  - Previously consumed raw materials are automatically restored.
-  - Inventory reverts correctly to the state before production.
+
 
 ### 🔁 Real-Time React Query UI
 - Uses `react-query` for live data caching and invalidation.
