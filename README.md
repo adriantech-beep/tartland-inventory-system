@@ -1,12 +1,59 @@
-# React + Vite
+# 🏭 Production Tracking System – Mixture-Based Inventory
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack production tracking system designed to manage product output based on **mixtures**, deduct **raw materials** from inventory, and restore them upon deletion — all with precision and accuracy.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## Expanding the ESLint configuration
+### ✅ Production Logging
+- Create production entries by selecting a mixture and quantity.
+- Calculates jars produced and bundles (85 jars per bundle).
+- Deducts material (flakes, choco, jars) based on mixture formula.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### ♻️ Smart Inventory Deduction
+- Deducts `bags` and `boxes` based on mixture-to-bag rules.
+- Tracks exact grams used and leftover bags.
+- Jar deduction is based on total grams used (e.g., 11.31 jars per mixture × 70g = ~792 jars).
+
+### 🗑️ Restore on Deletion
+- When a production log is deleted:
+  - Previously consumed raw materials are automatically restored.
+  - Inventory reverts correctly to the state before production.
+
+### 🔁 Real-Time React Query UI
+- Uses `react-query` for live data caching and invalidation.
+- Invalidate keys: `["summary"]`, `["productions"]` to ensure accurate data.
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer       | Tech Used                         |
+|-------------|-----------------------------------|
+| Frontend    | React, TailwindCSS, React Query   |
+| State Mgmt  | React Query                       |
+| Backend     | Node.js, Express                  |
+| Database    | MongoDB + Mongoose                |
+| Deployment  | Vercel (Frontend), Render (Backend) |
+
+---
+
+## 🧮 Mixture Formula
+
+For example: **Pure Crunch**
+
+- **Flakes per mixture**: 3 bags = 1.5kg
+- **Jar size**: ~70g
+- **1 mixture ≈ 11.31 jars**
+- **85 jars = 1 bundle**
+
+🧾 Example (70 mixtures):
+- ✅ Flakes: 210 bags
+- ✅ Jars: 791.7 jars (≈ 9.31 bags of jars)
+- ✅ Bundles: 44
+
+
+
+
+
