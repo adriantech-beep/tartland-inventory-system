@@ -1,21 +1,19 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { createOrders } from "../services/apiOrders";
+import { deleteOrder } from "../services/apiOrders";
 
-export const useCreateOrder = () => {
+export const useDeleteOrder = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: createOrders,
+    mutationFn: deleteOrder,
     onSuccess: () => {
-      toast.success("New order created");
       queryClient.invalidateQueries({ queryKey: ["orders"] });
       queryClient.invalidateQueries({ queryKey: ["stocks"] });
+      toast.success("Order successfully deleted");
     },
-    onError: (err) => {
-      if (err.response?.status === 422) {
-        toast.error(err.response.data?.message);
-      }
+    onError: () => {
+      toast.error("Failed to delete order");
     },
   });
 };

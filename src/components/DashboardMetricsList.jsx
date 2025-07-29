@@ -1,9 +1,8 @@
 import PureFlakesImg from "../assets/pure-flakes.png";
 import ChocoFlakesImg from "../assets/choco-flakes.png";
 
-const DashboardMetricsList = ({ produced }) => {
-  const { flavor, totalBundles } = produced;
-  console.log(flavor);
+const DashboardMetricsList = ({ available }) => {
+  const { flavor, availableBundles } = available;
 
   const imagePath = flavor === "Pure Crunch" ? PureFlakesImg : ChocoFlakesImg;
   return (
@@ -16,7 +15,7 @@ const DashboardMetricsList = ({ produced }) => {
           {flavor}
         </p>
         <p className="text-2xl font-bold text-cocoa dark:text-stone-800 font-sans ">
-          {totalBundles}
+          {availableBundles}
         </p>
       </div>
     </div>

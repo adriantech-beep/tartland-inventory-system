@@ -23,7 +23,7 @@ const MixtureRuleSettings = () => {
   const flakesOptions = materials
     .filter((material) => material.rawMaterialCategory === "Flakes")
     .map((mat) => ({
-      value: mat.id, // important for selection
+      value: mat.id,
       label: `${mat.name} (${mat.perGrams}g)`,
       material: {
         id: mat.id,
@@ -36,7 +36,7 @@ const MixtureRuleSettings = () => {
   const jarOptions = materials
     .filter((material) => material.rawMaterialCategory === "Jar")
     .map((mat) => ({
-      id: mat.id, // ✅ include this
+      id: mat.id,
       name: mat.name,
       perGrams: mat.perGrams,
       perBox: mat.perBox,
@@ -52,7 +52,6 @@ const MixtureRuleSettings = () => {
     jarMaterial: null,
   });
 
-  console.log(form.jarMaterial);
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -231,7 +230,7 @@ const MixtureRuleSettings = () => {
             <button
               type="button"
               onClick={handleCancel}
-              className="text-gray-500 text-sm"
+              className="text-sm bg-red-500 px-2"
             >
               Cancel
             </button>
