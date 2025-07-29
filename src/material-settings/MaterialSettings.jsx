@@ -139,7 +139,7 @@ const MaterialSettings = () => {
             <button
               type="button"
               onClick={handleCancel}
-              className="text-gray-500 text-sm"
+              className="text-sm bg-red-500 px-2"
             >
               Cancel
             </button>
@@ -159,7 +159,7 @@ const MaterialSettings = () => {
           <table className="min-w-full text-sm">
             <thead className="bg-blue-100 text-gray-700">
               <tr>
-                {materialSettingsHeadings.map((name, i) => (
+                {materialSettingsHeadings?.map((name, i) => (
                   <TableHead name={name} key={i} />
                 ))}
               </tr>
@@ -184,13 +184,13 @@ const MaterialSettings = () => {
                   <td className="p-2 text-stone-950">{mat.unit}</td>
                   <td className="p-2 space-x-2">
                     <button
-                      onClick={() => handleEdit(mat)}
+                      onClick={() => handleEdit?.(mat)}
                       className="text-blue-600 hover:underline text-sm"
                     >
                       Edit
                     </button>
                     <button
-                      onClick={() => deleteMaterial(mat.id)}
+                      onClick={() => deleteMaterial?.(mat.id)}
                       className="text-red-600 hover:underline text-sm"
                     >
                       Delete

@@ -1,20 +1,23 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { createOrders } from "../services/apiOrders";
+import { editOrder } from "../services/apiOrders";
 
-export const useCreateOrder = () => {
+export const useEditOrder = (setEditId) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: createOrders,
+    mutationFn: editOrder,
     onSuccess: () => {
-      toast.success("New order created");
+      toast.success("Order updated successfully");
       queryClient.invalidateQueries({ queryKey: ["orders"] });
       queryClient.invalidateQueries({ queryKey: ["stocks"] });
+      setEditId(null);
     },
     onError: (err) => {
       if (err.response?.status === 422) {
         toast.error(err.response.data?.message);
+      } else {
+        toast.error("Failed to update order");
       }
     },
   });
