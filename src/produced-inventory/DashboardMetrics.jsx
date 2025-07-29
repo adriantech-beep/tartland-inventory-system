@@ -1,13 +1,13 @@
 import DashboardMetricsList from "../components/DashboardMetricsList";
-import { useGetProductsProduced } from "./useGetProductsProduced";
+import { useGetAvailableStock } from "../orders/useGetAvailableStock";
 
 const DashboardMetrics = () => {
-  const { data: producedProducts = [] } = useGetProductsProduced();
+  const { data: availableStock = [] } = useGetAvailableStock();
 
   return (
     <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-2 gap-4 p-2">
-      {producedProducts.map((produced) => (
-        <DashboardMetricsList key={produced.id} produced={produced} />
+      {availableStock.map((available) => (
+        <DashboardMetricsList key={available.id} available={available} />
       ))}
     </section>
   );

@@ -6,7 +6,7 @@ const Header = () => {
       <button className="md:hidden bg-apricot  p-2 rounded shadow">☰</button>
 
       <h1 className="text-lg md:text-xl font-display font-bold text-raspberry">
-        Tartland<span className="text-stone-800"> Admin</span>
+        Inventory<span className="text-stone-800"> Admin</span>
       </h1>
 
       <div className="flex items-center gap-3">
