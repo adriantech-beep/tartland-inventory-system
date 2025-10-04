@@ -10,9 +10,7 @@ import {
   SidebarMenu,
   SidebarMenuBadge,
   SidebarMenuItem,
-  SidebarProvider,
   SidebarSeparator,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import {
   LayoutDashboard,
@@ -22,9 +20,18 @@ import {
   Settings2,
   Blend,
   PackageSearch,
-  LogOutIcon,
   Settings,
+  UserRound,
 } from "lucide-react";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from "@radix-ui/react-dropdown-menu";
+import { DropdownMenuTrigger } from "./ui/dropdown-menu";
 
 const sidebarGroups = [
   {
@@ -68,9 +75,9 @@ const SidebarLink = ({
   <NavLink
     to={to}
     className={({ isActive }) =>
-      `flex items-center gap-3 px-3 py-2 rounded-md transition-colors ${
+      `w-full flex items-center gap-3 px-3 py-2 rounded-md transition-colors hover:text-gray-700  ${
         isActive
-          ? "bg-gray-100 font-semibold"
+          ? "bg-blue-500 text-gray-50  font-semibold"
           : "text-muted-foreground hover:bg-muted/10"
       }`
     }
@@ -82,7 +89,7 @@ const SidebarLink = ({
 
 const AppSidebar = () => {
   return (
-    <Sidebar collapsible="icon" variant="floating">
+    <Sidebar>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -101,13 +108,16 @@ const AppSidebar = () => {
                 {group.items.map((item) => (
                   <SidebarMenuItem
                     key={item.title}
-                    className="flex items-center"
+                    className="hover:bg-blue-200 rounded-md flex items-center"
                   >
                     <SidebarLink
                       to={item.url}
                       icon={item.icon}
                       title={item.title}
                     />
+                    {item.title === "Orders" && (
+                      <SidebarMenuBadge>5</SidebarMenuBadge>
+                    )}
                   </SidebarMenuItem>
                 ))}
               </SidebarMenu>
@@ -118,12 +128,23 @@ const AppSidebar = () => {
 
       <SidebarSeparator />
 
-      {/* <SidebarFooter>
-        <button className="flex items-center gap-3 px-4 py-3 rounded-md text-sm font-medium text-red-500 hover:bg-red-100 dark:hover:bg-red-900/20 transition-colors w-full text-left">
-        <LogOutIcon size={18} />
-        Logout
-        </button>
-        </SidebarFooter> */}
+      <SidebarFooter>
+        <DropdownMenu>
+          <DropdownMenuTrigger className="flex items-center gap-2">
+            <UserRound />
+            <span>John Doe</span>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem>Billing</DropdownMenuItem>
+            <DropdownMenuItem>Team</DropdownMenuItem>
+            <DropdownMenuItem>Subscription</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </SidebarFooter>
     </Sidebar>
   );
 };

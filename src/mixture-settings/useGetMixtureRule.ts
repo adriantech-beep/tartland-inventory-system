@@ -1,5 +1,5 @@
+import { getMixtureRule } from "@/services/apiMixtureRule";
 import { useQuery } from "@tanstack/react-query";
-import { getMixtureRule } from "../services/apiMixtureRule";
 
 export const useGetMixtureRule = () => {
   const { data, isLoading } = useQuery({
