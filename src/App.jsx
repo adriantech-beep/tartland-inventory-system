@@ -6,10 +6,10 @@ import AdminLayout from "@/components/AdminLayout";
 import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
 import OrdersPage from "./pages/OrdersPage";
-import MaterialSettingsPage from "./pages/MaterialSettingsPage";
-import AddProductPage from "./pages/AddProductPage";
+import AddProductPage from "@/pages/AddProductPage.tsx";
 import MixtureSettingsPage from "./pages/MixtureSettingsPage";
 import ProduceProductPage from "@/pages/ProduceProductPage";
+import MaterialSettingsPage from "@/pages/MaterialSettingsPage.tsx";
 import { Toaster } from "sonner";
 
 const queryClient = new QueryClient();

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-toastify";
 import { deleteInboundLog } from "../services/apiInboundLog";
+import { toast } from "sonner";
 
 export const useDeleteInboundLog = () => {
   const queryClient = useQueryClient();
@@ -8,11 +8,11 @@ export const useDeleteInboundLog = () => {
   return useMutation({
     mutationFn: deleteInboundLog,
     onSuccess: () => {
-      queryClient.invalidateQueries(["inboundlogs"]);
-      toast.success("Inbound log successfully deleted");
+      queryClient.invalidateQueries({ queryKey: ["inboundlogs"] });
+      toast("Inbound log successfully deleted");
     },
     onError: () => {
-      toast.error("Failed to delete inbound log");
+      toast("Failed to delete inbound log");
     },
   });
 };

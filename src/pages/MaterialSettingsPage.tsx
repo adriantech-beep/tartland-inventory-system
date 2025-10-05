@@ -1,4 +1,4 @@
-import MaterialSettings from "../material-settings/MaterialSettings";
+import MaterialSettings from "@/material-settings/MaterialSettings";
 
 const MaterialSettingsPage = () => {
   return (

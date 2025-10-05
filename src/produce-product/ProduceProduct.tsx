@@ -54,6 +54,8 @@ const ProduceProduct = () => {
       parseInt(values.mixtureCount)
     );
 
+    if (!payload) return;
+
     if (editingProduction?.id) {
       editProduction({
         id: editingProduction.id,

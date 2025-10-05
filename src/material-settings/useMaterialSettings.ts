@@ -1,5 +1,5 @@
+import { getMaterialSettings } from "@/services/apiMaterialSettings";
 import { useQuery } from "@tanstack/react-query";
-import { getMaterialSettings } from "../services/apiMaterialSettings";
 
 export const useMaterialSettings = () => {
   const { data, isLoading } = useQuery({
