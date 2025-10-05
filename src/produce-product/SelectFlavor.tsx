@@ -51,7 +51,6 @@ const SelectFlavor = () => {
       },
     })
   );
-
   return (
     <FormField
       control={control}
