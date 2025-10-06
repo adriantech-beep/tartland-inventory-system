@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteMaterialSetting } from "../services/apiMaterialSettings";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 export const useDeleteMaterialSetting = () => {
   const queryClient = useQueryClient();
@@ -8,11 +8,11 @@ export const useDeleteMaterialSetting = () => {
   return useMutation({
     mutationFn: deleteMaterialSetting,
     onSuccess: () => {
-      queryClient.invalidateQueries(["materialsettings"]);
-      toast.success("Material successfully deleted");
+      queryClient.invalidateQueries({ queryKey: ["materialsettings"] });
+      toast("Material successfully deleted");
     },
     onError: () => {
-      toast.error("Failed to delete material");
+      toast("Failed to delete material");
     },
   });
 };

@@ -3,9 +3,9 @@ import { z } from "zod";
 export const addProductSchema = z.object({
   rawMaterialDetails: z.object({
     id: z.string(),
-    name: z.string(),
-    perGrams: z.number(),
-    perBox: z.number(),
+    name: z.string().min(1, "Product name is required"),
+    perGrams: z.number().positive("Must be greater than zero"),
+    perBox: z.number().positive("Must be greater than zero"),
   }),
   boxCount: z
     .string()

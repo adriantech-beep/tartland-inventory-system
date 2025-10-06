@@ -20,7 +20,7 @@ const InboundLogTable = ({ inbound, handleEdit }: InboundLogTableProps) => {
 
   return (
     <TableRow>
-      {createdAt ? dateFormatter(createdAt) : "N/A"}
+      <TableCell> {createdAt ? dateFormatter(createdAt) : "N/A"}</TableCell>
       <TableCell>{name}</TableCell>
       <TableCell>{perBox} pcs</TableCell>
       <TableCell>{perGrams}g</TableCell>
@@ -52,7 +52,7 @@ const InboundLogTable = ({ inbound, handleEdit }: InboundLogTableProps) => {
           </AlertDialogTrigger>
           <ConfirmDelete
             onHandleDelete={() => deleteInboundLog(id!)}
-            message={`Delete ${inbound.rawMaterial.name} (${inbound.boxCount} boxes)?`}
+            message={`Delete ${name} (${boxCount} boxes)?`}
           />
         </AlertDialog>
       </TableCell>

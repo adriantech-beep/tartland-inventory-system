@@ -54,6 +54,7 @@ const SelectProduct = () => {
             onValueChange={(val) => {
               const selected = productOptions.find((m) => m.value === val);
               field.onChange(selected?.material ?? null);
+              field.onBlur();
             }}
             value={field.value?.id ?? ""}
           >
