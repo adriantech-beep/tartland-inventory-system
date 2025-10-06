@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createMaterialSettings } from "../services/apiMaterialSettings";
-import { toast } from "react-toastify";
+import type { AxiosError } from "axios";
+import { toast } from "sonner";
 
 export const useCreateMaterialSettings = () => {
   const queryClient = useQueryClient();
@@ -8,15 +9,13 @@ export const useCreateMaterialSettings = () => {
   return useMutation({
     mutationFn: createMaterialSettings,
     onSuccess: () => {
-      toast.success("Material created");
+      toast("Material created");
       queryClient.invalidateQueries({ queryKey: ["materialsettings"] });
     },
-    onError: (err) => {
-      if (err.response?.status !== 422) {
-        toast.error(
-          err.response.data?.message || "Product name already exists"
-        );
-      }
+    onError: (err: AxiosError<any>) => {
+      const message =
+        err.response?.data?.message || "Failed to create material";
+      toast(message);
     },
   });
 };

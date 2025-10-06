@@ -9,6 +9,8 @@ import type { ProductionLog } from "@/production/utils/produceProduct";
 import { dateFormatter } from "@/helpers/dateFormatter";
 import { Button } from "@/components/ui/button";
 import { Trash2, Edit3 } from "lucide-react";
+import { AlertDialog, AlertDialogTrigger } from "@radix-ui/react-alert-dialog";
+import ConfirmDelete from "@/components/ConfirmDelete";
 
 interface ProductionLogTableProps {
   production: ProductionLog;
@@ -55,18 +57,23 @@ const ProductionLogTable = ({
               <Edit3 className="w-4 h-4 mr-1" />
               Edit
             </Button>
-            <Button
-              size="sm"
-              variant="ghost"
-              onClick={(e) => {
-                e.stopPropagation();
-                deleteProduction(id!);
-              }}
-              className="text-destructive hover:text-destructive/80"
-            >
-              <Trash2 className="w-4 h-4 mr-1" />
-              Delete
-            </Button>
+
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="text-destructive hover:text-destructive/80"
+                >
+                  <Trash2 className="w-4 h-4 mr-1" />
+                  Delete
+                </Button>
+              </AlertDialogTrigger>
+              <ConfirmDelete
+                onHandleDelete={() => deleteProduction(id!)}
+                message={`Delete ${flavor} (with mixture count of ${mixtureCount} )?`}
+              />
+            </AlertDialog>
           </TableCell>
         </TableRow>
       </HoverCardTrigger>

@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-toastify";
 import { updateMaterialSettings } from "../services/apiMaterialSettings";
+import { toast } from "sonner";
 
-export const useEditMaterialSettings = (setEditId) => {
+export const useEditMaterialSettings = (onEditDone?: () => void) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -10,16 +10,15 @@ export const useEditMaterialSettings = (setEditId) => {
     onSuccess: () => {
       toast.success("Material updated successfully");
       queryClient.invalidateQueries({ queryKey: ["materialsettings"] });
-      setEditId(null);
+      if (onEditDone) onEditDone();
     },
-    onError: (err) => {
-      if (err.response?.status === 422) {
-        toast.error(
-          err.response.data?.message || "Material name already exists"
-        );
-      } else {
-        toast.error("Failed to update material");
-      }
+    onError: (err: any) => {
+      const message =
+        err.response?.data?.message ||
+        (err.response?.status === 422
+          ? "Validation failed. Please check your inputs."
+          : "Failed to update material");
+      toast.error(message);
     },
   });
 };

@@ -28,7 +28,12 @@ const ConfirmDelete = ({ message, onHandleDelete }: ConfirmDeleteProps) => {
       </AlertDialogHeader>
       <AlertDialogFooter>
         <AlertDialogCancel>Cancel</AlertDialogCancel>
-        <AlertDialogAction onClick={onHandleDelete}>Continue</AlertDialogAction>
+        <AlertDialogAction
+          onClick={onHandleDelete}
+          className="bg-destructive text-popover-foreground hover:bg-red-300"
+        >
+          Continue
+        </AlertDialogAction>
       </AlertDialogFooter>
     </AlertDialogContent>
   );

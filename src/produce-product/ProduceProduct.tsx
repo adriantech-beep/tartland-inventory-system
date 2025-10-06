@@ -43,6 +43,7 @@ const ProduceProduct = () => {
       selectedMixture: {},
       mixtureCount: "",
     },
+    mode: "onTouched",
   });
 
   const { handleSubmit, getValues, reset } = form;
