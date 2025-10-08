@@ -26,13 +26,13 @@ A full-stack production tracking system designed to manage product output based 
 
 ## 🛠️ Tech Stack
 
-| Layer       | Tech Used                         |
-|-------------|-----------------------------------|
-| Frontend    | React, TailwindCSS, React Query   |
-| State Mgmt  | React Query                       |
-| Backend     | Node.js, Express                  |
-| Database    | MongoDB + Mongoose                |
-| Deployment  | Vercel (Frontend), Render (Backend) |
+| Layer       | Tech Used                                    |
+|-------------|----------------------------------------------|
+| Frontend    | React,TypeScript, TailwindCSS, React Query   |
+| State Mgmt  | React Query                                  |
+| Backend     | Node.js, Express                             |
+| Database    | MongoDB + Mongoose                           |
+| Deployment  | Vercel (Frontend), Render (Backend)          |
 
 ---
 
