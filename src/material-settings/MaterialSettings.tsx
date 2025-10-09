@@ -84,8 +84,15 @@ const MaterialSettings = () => {
     mode: "onTouched",
   });
 
-  const { getValues, control, handleSubmit, reset } = form;
+  const {
+    getValues,
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = form;
 
+  console.log(errors);
   const onSubmit = () => {
     const values = getValues();
 
@@ -96,6 +103,13 @@ const MaterialSettings = () => {
     } else {
       createMaterial(values);
     }
+    reset({
+      name: "",
+      perBox: undefined,
+      perGrams: undefined,
+      rawMaterialCategory: "",
+      unit: "",
+    });
   };
 
   const handleEdit = (material: MaterialSettingsForm) => {
@@ -107,6 +121,17 @@ const MaterialSettings = () => {
       rawMaterialCategory: material.rawMaterialCategory,
       unit: material.unit,
     });
+  };
+
+  const handleCancel = () => {
+    reset({
+      name: "",
+      perBox: undefined,
+      perGrams: undefined,
+      rawMaterialCategory: "",
+      unit: "",
+    });
+    setEditingInbound(null);
   };
 
   return (
@@ -159,10 +184,19 @@ const MaterialSettings = () => {
             </div>
 
             <div className="mt-2">
-              <SelectMaterial control={control} />
+              <SelectMaterial />
             </div>
 
-            <div className="flex justify-end mt-2">
+            <div className="flex justify-end gap-2 mt-2">
+              {editingInbound && (
+                <Button
+                  type="button"
+                  onClick={handleCancel}
+                  className="text-sm bg-red-500 px-2"
+                >
+                  Cancel
+                </Button>
+              )}
               <Button type="submit">Submit</Button>
             </div>
           </form>

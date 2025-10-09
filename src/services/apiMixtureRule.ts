@@ -1,15 +1,22 @@
-import { toast } from "react-toastify";
+import axios from "axios";
 import axiosInstance from "./axiosInstance";
+import type { MixtureRuleData } from "@/mixture-settings/MixtureRuleTable";
+import type { MixtureRuleForm } from "@/mixture-settings/mixtureRuleSchema";
 
-export const createMixtureRule = async (mixture) => {
+export type CreateMixtureRulePayload = Omit<
+  MixtureRuleData,
+  "id" | "createdAt" | "updatedAt"
+>;
+
+export const createMixtureRule = async (mixture: CreateMixtureRulePayload) => {
   try {
     const { data } = await axiosInstance.post("/api/mixture-rules", mixture);
     return data;
-  } catch (err) {
-    if (err.response?.status === 422) {
-      toast.error(err.response.data?.message || "Material already exists.");
+  } catch (err: unknown) {
+    if (axios.isAxiosError(err)) {
+      throw err;
     }
-    throw err;
+    throw new Error("Unexpected error while creating mixture rule");
   }
 };
 
@@ -23,12 +30,18 @@ export const getMixtureRule = async () => {
   }
 };
 
-export const editMixturerule = async ({ id, ...mixture }) => {
-  const { data } = await axiosInstance.put(`/api/mixture-rules/${id}`, mixture);
+export const editMixturerule = async ({
+  id,
+  values,
+}: {
+  id: string;
+  values: MixtureRuleForm;
+}) => {
+  const { data } = await axiosInstance.put(`/api/mixture-rules/${id}`, values);
   return data;
 };
 
-export const deleteMixtureRule = async (id) => {
+export const deleteMixtureRule = async (id: string) => {
   const { data } = await axiosInstance.delete(`/api/mixture-rules/${id}`);
   return data;
 };

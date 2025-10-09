@@ -26,6 +26,8 @@ import ProductionLogTable from "./ProductionLogTable";
 import { useGetProductionLog } from "./useGetProductionLog";
 import { useEditProductionLog } from "./useEditProduction";
 import { PackageSearch } from "lucide-react";
+import { useGetSummaryTotal } from "@/stocks-inventory/useGetSummaryTotal";
+import StockSummary from "./StockSummarry";
 
 const ProduceProduct = () => {
   const [editingProduction, setEditingProduction] =
@@ -35,6 +37,12 @@ const ProduceProduct = () => {
   const { data: productionLog = [], isLoading } = useGetProductionLog();
   const { mutate: editProduction } = useEditProductionLog(() =>
     setEditingProduction(null)
+  );
+
+  const { data: summary = [] } = useGetSummaryTotal();
+
+  const sortedSummary = [...summary].sort((a, b) =>
+    a.name.localeCompare(b.name)
   );
 
   const form = useForm<ProduceProductForm>({
@@ -78,11 +86,19 @@ const ProduceProduct = () => {
     });
   };
 
+  const handleCancel = () => {
+    reset({
+      selectedMixture: {},
+      mixtureCount: "",
+    });
+    setEditingProduction(null);
+  };
+
   return (
     <FormProvider {...form}>
       <div className="w-full mx-auto px-4 py-8 space-y-8">
         <div className="w-full mx-auto p-6 bg-card text-card-foreground rounded-xl border border-border shadow-sm space-y-6 transition-colors">
-          <div className="flex items-center gap-3 border-b border-border pb-3">
+          <div className="flex  items-center gap-3 border-b border-border pb-3">
             <div className="p-2 rounded-md bg-primary/10 text-primary">
               <PackageSearch className="w-5 h-5" />
             </div>
@@ -95,7 +111,9 @@ const ProduceProduct = () => {
               </p>
             </div>
           </div>
-
+          <div>
+            <StockSummary sorted={sortedSummary} />
+          </div>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="sm:flex-[1.5] w-full">
@@ -115,7 +133,16 @@ const ProduceProduct = () => {
               </div>
             </div>
 
-            <div className="flex justify-end">
+            <div className="flex justify-end gap-4">
+              {editingProduction && (
+                <Button
+                  type="button"
+                  onClick={handleCancel}
+                  className="text-sm bg-red-500 px-2"
+                >
+                  Cancel
+                </Button>
+              )}
               <Button type="submit" className="px-6">
                 {editingProduction ? "Update" : "Produce"}
               </Button>

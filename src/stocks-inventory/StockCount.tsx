@@ -8,7 +8,7 @@ const statusColors = {
   LOW: "text-red-400",
 };
 
-const getStatus = (total) => {
+const getStatus = (total: number) => {
   if (total >= 2000) return "HIGH";
   if (total >= 1000) return "MEDIUM";
   return "LOW";
@@ -16,6 +16,8 @@ const getStatus = (total) => {
 
 const StockCount = () => {
   const { data: stocks = [], isLoading } = useGetSummaryTotal();
+
+  console.log(stocks);
   const sortedStocks = [...stocks].sort((a, b) => a.name.localeCompare(b.name));
 
   if (isLoading) return <p className="text-center text-gray-500">Loading...</p>;

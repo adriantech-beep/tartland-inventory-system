@@ -1,15 +1,15 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateMaterialSettings } from "../services/apiMaterialSettings";
+import { editMixturerule } from "../services/apiMixtureRule";
 import { toast } from "sonner";
 
-export const useEditMaterialSettings = (onEditDone?: () => void) => {
+export const useEditMixtureRule = (onEditDone?: () => void) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: updateMaterialSettings,
+    mutationFn: editMixturerule,
     onSuccess: () => {
-      toast("Material updated successfully");
-      queryClient.invalidateQueries({ queryKey: ["materialsettings"] });
+      toast("Mixture rule updated successfully");
+      queryClient.invalidateQueries({ queryKey: ["mixturerules"] });
       if (onEditDone) onEditDone();
     },
     onError: (err: any) => {

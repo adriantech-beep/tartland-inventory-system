@@ -36,6 +36,8 @@ export type MixtureMaterial = {
 };
 
 export type JarMaterial = Material & {
+  id: string;
+  name: string;
   perGrams: number;
   perBox: number;
 };
@@ -108,19 +110,23 @@ export function createProductionPayload(
     };
   });
 
-  const jarMaterial = mixtureRule.jarMaterial;
-  const totalJarsUsed = parseFloat((totalJars / jarMaterial.perBox).toFixed(2));
+  const jarMaterialBase = mixtureRule.jarMaterial.material;
+  const totalJarsUsed = parseFloat(
+    (totalJars / jarMaterialBase.perBox).toFixed(2)
+  );
   const jarsUsed = parseFloat(totalJars.toFixed(1));
-  const fullBoxesUsed = Math.floor(jarsUsed / jarMaterial.perBox);
-  const leftoverJars = +(jarsUsed % jarMaterial.perBox).toFixed(1);
-  const leftoverBoxFraction = +(leftoverJars / jarMaterial.perBox).toFixed(2);
+  const fullBoxesUsed = Math.floor(jarsUsed / jarMaterialBase.perBox);
+  const leftoverJars = +(jarsUsed % jarMaterialBase.perBox).toFixed(1);
+  const leftoverBoxFraction = +(leftoverJars / jarMaterialBase.perBox).toFixed(
+    2
+  );
 
   materialsUsed.push({
-    id: jarMaterial.id,
-    name: jarMaterial.name,
+    id: jarMaterialBase.id,
+    name: jarMaterialBase.name,
     type: "jar",
-    perGrams: jarMaterial.perGrams,
-    perBox: jarMaterial.perBox,
+    perGrams: jarMaterialBase.perGrams,
+    perBox: jarMaterialBase.perBox,
     bagsUsed: totalJarsUsed,
     jarsUsed,
     fullBoxesUsed,

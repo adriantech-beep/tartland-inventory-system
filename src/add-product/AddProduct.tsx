@@ -66,7 +66,13 @@ const AddProduct = () => {
       boxCount: editingInbound.boxCount.toString(),
     });
   };
-
+  const handleCancel = () => {
+    reset({
+      rawMaterialDetails: { id: "", name: "", perGrams: 0, perBox: 0 },
+      boxCount: "",
+    });
+    setEditingInbound(null);
+  };
   return (
     <FormProvider {...form}>
       <div className="w-full mx-auto px-4 py-8 space-y-8">
@@ -101,9 +107,18 @@ const AddProduct = () => {
                 <FormMessage />
               </div>
             </div>
-            <div className="flex justify-end">
+            <div className="flex justify-end gap-4">
+              {editingInbound && (
+                <Button
+                  type="button"
+                  onClick={handleCancel}
+                  className="text-sm bg-red-500 px-2"
+                >
+                  Cancel
+                </Button>
+              )}
               <Button type="submit">
-                {editingInbound ? "Update" : "Produce"}
+                {editingInbound ? "Update" : "Add product"}
               </Button>
             </div>
           </form>

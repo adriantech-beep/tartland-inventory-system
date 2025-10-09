@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
-// import { ToastContainer } from "react-toastify";
-// import  "react-toastify/dist/ReactToastify.css";
+
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/AppSidebar.tsx";
 import { ModeToggle } from "./ModeToggle";
@@ -18,19 +17,6 @@ const AdminLayout = () => {
         </div>
         <Outlet />
       </main>
-      {/* <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-        className="z-50"
-      /> */}
     </SidebarProvider>
   );
 };
