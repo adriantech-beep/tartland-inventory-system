@@ -1,4 +1,4 @@
-import ProduceProduct from "@/produce-product/ProduceProduct.tsx";
+import ProduceProduct from "@/produce-product/ProduceProduct";
 
 const ProduceProductPage = () => {
   return <ProduceProduct />;

@@ -31,7 +31,7 @@ const SelectProduct = () => {
   const { data: materials = [] } = useMaterialSettings();
   const { control } = useFormContext<AddProductForm>();
 
-  const productOptions: ProductField[] = materials.map(
+  const materialOptions: ProductField[] = materials.map(
     (material: { id: any; name: any; perGrams: any; perBox: any }) => ({
       value: material.id,
       label: `${material.name} x ${material.perBox} (${material.perGrams}g)each`,
@@ -52,7 +52,7 @@ const SelectProduct = () => {
           <FormLabel>Select Product</FormLabel>
           <Select
             onValueChange={(val) => {
-              const selected = productOptions.find((m) => m.value === val);
+              const selected = materialOptions.find((m) => m.value === val);
               field.onChange(selected?.material ?? null);
               field.onBlur();
             }}
@@ -64,7 +64,7 @@ const SelectProduct = () => {
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              {productOptions.map((mixture) => (
+              {materialOptions.map((mixture) => (
                 <SelectItem key={mixture.value} value={mixture.value}>
                   {mixture.label}
                 </SelectItem>

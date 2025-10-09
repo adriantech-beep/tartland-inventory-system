@@ -11,7 +11,7 @@ import { bagOptions } from "../constant/bagOptions";
 import { mixtureruleSettingsHeadings } from "../constant/mixtureRuleSettingsHeadings";
 import TableHead from "../components/TableHead";
 
-const MixtureRuleSettings = () => {
+const Mixture = () => {
   const [editId, setEditId] = useState(null);
 
   const { data: materials = [] } = useMaterialSettings();
@@ -36,6 +36,8 @@ const MixtureRuleSettings = () => {
   const jarOptions = materials
     .filter((material) => material.rawMaterialCategory === "Jar")
     .map((mat) => ({
+      // value: mat.id,
+      // label: `${mat.name} (${mat.perGrams}g)`,
       id: mat.id,
       name: mat.name,
       perGrams: mat.perGrams,
@@ -302,4 +304,4 @@ const MixtureRuleSettings = () => {
   );
 };
 
-export default MixtureRuleSettings;
+export default Mixture;

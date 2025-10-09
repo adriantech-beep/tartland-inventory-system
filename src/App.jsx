@@ -7,7 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
 import OrdersPage from "./pages/OrdersPage";
 import AddProductPage from "@/pages/AddProductPage.tsx";
-import MixtureSettingsPage from "./pages/MixtureSettingsPage";
+import MixtureSettingsPage from "@/pages/MixtureSettingsPage";
 import ProduceProductPage from "@/pages/ProduceProductPage";
 import MaterialSettingsPage from "@/pages/MaterialSettingsPage.tsx";
 import { Toaster } from "sonner";

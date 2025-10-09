@@ -8,7 +8,7 @@ export const useDeleteMixtureRule = () => {
   return useMutation({
     mutationFn: deleteMixtureRule,
     onSuccess: () => {
-      queryClient.invalidateQueries(["mixturerules"]);
+      queryClient.invalidateQueries({ queryKey: ["mixturerules"] });
       toast.success("Mixture rule successfully deleted");
     },
     onError: () => {

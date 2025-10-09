@@ -1,15 +1,15 @@
-import { toast } from "react-toastify";
 import axiosInstance from "./axiosInstance";
+import axios from "axios";
 
-export const createInventory = async (inventory) => {
+export const createInventory = async (inventory: any) => {
   try {
     const { data } = await axiosInstance.post("/api/inventory", inventory);
     return data;
-  } catch (err) {
-    if (err.response?.status === 422) {
-      toast.error(err.response.data?.message || "Creating inventory failed.");
+  } catch (err: unknown) {
+    if (axios.isAxiosError(err)) {
+      throw err;
     }
-    throw err;
+    throw new Error("Unexpected error while fetching inventory");
   }
 };
 
@@ -23,7 +23,7 @@ export const getInventory = async () => {
   }
 };
 
-export const deleteInventory = async (id) => {
+export const deleteInventory = async (id: string) => {
   const { data } = await axiosInstance.delete(`/api/inventory/${id}`);
   return data;
 };

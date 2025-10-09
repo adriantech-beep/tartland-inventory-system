@@ -115,9 +115,9 @@ const AppSidebar = () => {
                       icon={item.icon}
                       title={item.title}
                     />
-                    {item.title === "Orders" && (
+                    {/* {item.title === "Orders" && (
                       <SidebarMenuBadge>5</SidebarMenuBadge>
-                    )}
+                    )} */}
                   </SidebarMenuItem>
                 ))}
               </SidebarMenu>

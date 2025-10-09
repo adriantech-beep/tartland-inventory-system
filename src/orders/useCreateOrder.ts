@@ -1,6 +1,7 @@
+import { createOrders } from "@/services/apiOrders";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-toastify";
-import { createOrders } from "../services/apiOrders";
+import type { AxiosError } from "axios";
+import { toast } from "sonner";
 
 export const useCreateOrder = () => {
   const queryClient = useQueryClient();
@@ -8,14 +9,13 @@ export const useCreateOrder = () => {
   return useMutation({
     mutationFn: createOrders,
     onSuccess: () => {
-      toast.success("New order created");
+      toast("New order created");
       queryClient.invalidateQueries({ queryKey: ["orders"] });
       queryClient.invalidateQueries({ queryKey: ["stocks"] });
     },
-    onError: (err) => {
-      if (err.response?.status === 422) {
-        toast.error(err.response.data?.message);
-      }
+    onError: (err: AxiosError<any>) => {
+      const message = err.response?.data?.message || "Failed to create order";
+      toast(message);
     },
   });
 };

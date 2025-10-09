@@ -5,6 +5,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useGetProductsProduced } from "@/produced-inventory/useGetProductsProduced";
 import {
   Select,
   SelectContent,
@@ -14,18 +15,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { rawMaterial } from "@/constant/rawMaterial";
 import { useFormContext } from "react-hook-form";
-import type { MaterialSettingsForm } from "./materialSettingsSchema";
-const SelectMaterial = () => {
-  const { control } = useFormContext<MaterialSettingsForm>();
+import type { OrderForm } from "./ordersSchema";
+
+type FlavorField = {
+  value: string;
+  label: string;
+};
+const SelectFlavorOrder = () => {
+  const { data: productsProduced = [] } = useGetProductsProduced();
+  const { control } = useFormContext<OrderForm>();
+
+  const flavorOptions: FlavorField[] = productsProduced.map(
+    (product: { flavor: any }) => ({
+      value: product.flavor,
+      label: product.flavor,
+    })
+  );
   return (
     <FormField
       control={control}
-      name="rawMaterialCategory"
+      name="flavorName"
       render={({ field }) => (
         <FormItem>
-          <FormLabel>Raw Material Category</FormLabel>
+          <FormLabel>Choose flavor</FormLabel>
           <Select
             value={field.value}
             onValueChange={(val) => {
@@ -35,16 +48,16 @@ const SelectMaterial = () => {
           >
             <FormControl>
               <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Select category" />
+                <SelectValue placeholder="Select flavor" />
               </SelectTrigger>
             </FormControl>
 
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Categories</SelectLabel>
-                {rawMaterial.map((mat) => (
-                  <SelectItem key={mat.value} value={mat.value}>
-                    {mat.label}
+                {flavorOptions.map((flavor) => (
+                  <SelectItem key={flavor.value} value={flavor.value}>
+                    {flavor.label}
                   </SelectItem>
                 ))}
               </SelectGroup>
@@ -58,4 +71,4 @@ const SelectMaterial = () => {
   );
 };
 
-export default SelectMaterial;
+export default SelectFlavorOrder;

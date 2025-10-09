@@ -49,7 +49,7 @@ const MateriaSettingsTable = ({
             </Button>
           </AlertDialogTrigger>
           <ConfirmDelete
-            onHandleDelete={() => deleteMaterial(id)}
+            onHandleDelete={() => deleteMaterial(id!)}
             message={`Delete ${name} (${rawMaterialCategory} boxes)?`}
           />
         </AlertDialog>
