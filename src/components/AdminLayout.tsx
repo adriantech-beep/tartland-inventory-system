@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/AppSidebar.tsx";
@@ -6,6 +6,11 @@ import { ModeToggle } from "./ModeToggle";
 import Account from "@/account/Account";
 
 const AdminLayout = () => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
   return (
     <SidebarProvider>
       <AppSidebar />

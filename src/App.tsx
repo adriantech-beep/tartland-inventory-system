@@ -1,4 +1,4 @@
-import { HashRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "@/components/Theme-Provider";
 
@@ -11,6 +11,8 @@ import MixtureSettingsPage from "@/pages/MixtureSettingsPage";
 import ProduceProductPage from "@/pages/ProduceProductPage";
 import MaterialSettingsPage from "@/pages/MaterialSettingsPage.tsx";
 import { Toaster } from "sonner";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 
 const queryClient = new QueryClient();
 
@@ -20,8 +22,10 @@ function App() {
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <HashRouter>
           <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
             <Route element={<AdminLayout />}>
-              <Route index element={<Dashboard />} />
+              <Route path="dashboard" element={<Dashboard />} />
               <Route path="products" element={<Products />} />
               <Route path="add-product" element={<AddProductPage />} />
               <Route path="orders" element={<OrdersPage />} />
@@ -36,6 +40,8 @@ function App() {
                 element={<MixtureSettingsPage />}
               />
             </Route>
+
+            <Route index element={<Navigate to="/login" replace />} />
           </Routes>
         </HashRouter>
         <Toaster position="top-center" />
