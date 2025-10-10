@@ -7,8 +7,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { handleLogout } from "@/services/apiLogout";
+import { LogOutIcon } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const Account = () => {
+  const logout = handleLogout();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -21,9 +26,11 @@ const Account = () => {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Profile</DropdownMenuItem>
-        <DropdownMenuItem>Billing</DropdownMenuItem>
-        <DropdownMenuItem>Team</DropdownMenuItem>
-        <DropdownMenuItem>Subscription</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => logout}>
+          Logout <LogOutIcon />
+        </DropdownMenuItem>
+        {/* <DropdownMenuItem>Team</DropdownMenuItem>
+        <DropdownMenuItem>Subscription</DropdownMenuItem> */}
       </DropdownMenuContent>
     </DropdownMenu>
   );
