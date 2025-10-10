@@ -7,13 +7,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { handleLogout } from "@/services/apiLogout";
 import { LogOutIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const Account = () => {
-  const logout = handleLogout();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    toast.success("Logged out successfully");
+    navigate("/");
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -26,11 +33,10 @@ const Account = () => {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Profile</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => logout}>
-          Logout <LogOutIcon />
+        <DropdownMenuItem onClick={handleLogout}>
+          <LogOutIcon className="mr-2 h-4 w-4" />
+          Logout
         </DropdownMenuItem>
-        {/* <DropdownMenuItem>Team</DropdownMenuItem>
-        <DropdownMenuItem>Subscription</DropdownMenuItem> */}
       </DropdownMenuContent>
     </DropdownMenu>
   );
