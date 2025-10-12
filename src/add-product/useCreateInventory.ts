@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-toastify";
 import { createInventory } from "../services/apiInventory";
+import type { AxiosError } from "axios";
+import { toast } from "sonner";
 
 export const useCreateInventory = () => {
   const queryClient = useQueryClient();
@@ -8,13 +9,13 @@ export const useCreateInventory = () => {
   return useMutation({
     mutationFn: createInventory,
     onSuccess: () => {
-      toast.success("New inventory item created");
+      toast("New inventory item created");
       queryClient.invalidateQueries({ queryKey: ["inventories"] });
     },
-    onError: (err) => {
-      if (err.response?.status !== 422) {
-        toast.error(err.response.data?.message);
-      }
+    onError: (err: AxiosError<any>) => {
+      const message =
+        err.response?.data?.message || "Failed to create inventory";
+      toast(message);
     },
   });
 };

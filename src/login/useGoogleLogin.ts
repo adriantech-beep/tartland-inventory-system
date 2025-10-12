@@ -14,13 +14,13 @@ export const useGoogle = () => {
     CredentialResponse
   >({
     mutationFn: loginGoogle,
-    onSuccess: (res) => {
+    onSuccess: (res: { token: string; user: any }) => {
       localStorage.setItem("token", res.token);
       localStorage.setItem("user", JSON.stringify(res.user));
       toast("Login successful");
       navigate("/dashboard");
     },
-    onError: (err) => {
+    onError: (err: any) => {
       if (err.response?.status === 403) {
         toast(err.response.data?.message);
       } else {

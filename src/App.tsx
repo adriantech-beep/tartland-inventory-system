@@ -13,6 +13,7 @@ import MaterialSettingsPage from "@/pages/MaterialSettingsPage.tsx";
 import { Toaster } from "sonner";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import CompanySettingsPage from "./pages/CompanySettingsPage";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,10 @@ function App() {
             <Route path="/signup" element={<SignupPage />} />
             <Route element={<AdminLayout />}>
               <Route path="dashboard" element={<Dashboard />} />
+              <Route
+                path="company-settings"
+                element={<CompanySettingsPage />}
+              />
               <Route path="products" element={<Products />} />
               <Route path="add-product" element={<AddProductPage />} />
               <Route path="orders" element={<OrdersPage />} />
