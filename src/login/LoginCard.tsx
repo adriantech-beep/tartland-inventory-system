@@ -12,9 +12,11 @@ import { Facebook, Twitter, Instagram } from "lucide-react";
 import { Link } from "react-router-dom";
 import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
 import { useGoogle } from "./useGoogleLogin";
+import { useLogin } from "./useLogin";
 
 const LoginCard = () => {
   const { mutate: googleLogin } = useGoogle();
+  const { mutate: login } = useLogin();
   const form = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -24,7 +26,7 @@ const LoginCard = () => {
   });
 
   const onSubmit = (data: LoginForm) => {
-    console.log(data);
+    login(data);
   };
 
   const handleGoogleSuccess = (CredentialResponse: CredentialResponse) => {

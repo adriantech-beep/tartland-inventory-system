@@ -56,6 +56,7 @@ const SignupFields = () => {
                   {...field}
                   value={(field.value as string | undefined) ?? ""}
                   onChange={(e) => field.onChange(e.target.value)}
+                  className="text-gray-800"
                 />
               </FormControl>
               <FormMessage className="text-red-500 font-sans text-sm mt-0" />

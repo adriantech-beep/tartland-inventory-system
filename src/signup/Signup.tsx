@@ -7,8 +7,10 @@ import Logo from "@/assets/login/Tartland-logo.png";
 import SignupFields from "./SignupFields";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useSignup } from "./useSignup";
 
 const Signup = () => {
+  const { mutate: signup } = useSignup();
   const form = useForm<SignupForm>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -21,7 +23,7 @@ const Signup = () => {
   const { handleSubmit } = form;
 
   const onSubmit = (data: SignupForm) => {
-    console.log(data);
+    signup(data);
   };
   return (
     <Card

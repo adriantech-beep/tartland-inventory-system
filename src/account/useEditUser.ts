@@ -1,15 +1,15 @@
+import { editUser } from "@/services/apiLogin";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-toastify";
-import { editInventory } from "../services/apiInventory";
+import { toast } from "sonner";
 
-export const useEditInventory = (onEditDone?: () => void) => {
+export const useEditUser = (onEditDone?: () => void) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: editInventory,
+    mutationFn: editUser,
     onSuccess: () => {
-      toast.success("Inventory list updated successfully");
-      queryClient.invalidateQueries({ queryKey: ["inventories"] });
+      toast("User info updated successfully");
+      queryClient.invalidateQueries({ queryKey: ["users"] });
       if (onEditDone) onEditDone();
     },
     onError: (err: any) => {
@@ -17,7 +17,7 @@ export const useEditInventory = (onEditDone?: () => void) => {
         err.response?.data?.message ||
         (err.response?.status === 422
           ? "Validation failed. Please check inputs."
-          : "Failed to update inventory list");
+          : "Failed to update user info");
       toast(message);
     },
   });
