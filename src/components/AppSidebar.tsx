@@ -37,8 +37,8 @@ const sidebarGroups = [
   {
     label: "Menu",
     items: [
-      { title: "Dashboard", url: "/", icon: LayoutDashboard },
-      { title: "Settings", url: "/", icon: Settings },
+      { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
+      { title: "Settings", url: "/settings", icon: Settings },
     ],
   },
   {
@@ -139,9 +139,7 @@ const AppSidebar = () => {
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Billing</DropdownMenuItem>
-            <DropdownMenuItem>Team</DropdownMenuItem>
-            <DropdownMenuItem>Subscription</DropdownMenuItem>
+            <DropdownMenuItem>Logout</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarFooter>

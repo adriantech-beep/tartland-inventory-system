@@ -1,42 +1,45 @@
+import { useFormContext } from "react-hook-form";
+import type { EditUserForm } from "./editUserSchema";
 import {
   FormControl,
   FormField,
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import type { LoginForm } from "./loginSchema";
 import { Input } from "@/components/ui/input";
-import { useFormContext } from "react-hook-form";
-import { Mail, Lock } from "lucide-react";
-import type { JSX } from "react";
 
 type FieldConfig = {
-  name: keyof LoginForm;
+  name: keyof EditUserForm;
   placeholder: string;
   type: string;
-  icon: JSX.Element;
+  accept?: string;
 };
 
 const userInfoFields: FieldConfig[] = [
   {
+    name: "name",
+    placeholder: "Enter your name",
+    type: "text",
+  },
+  {
     name: "email",
     placeholder: "Enter email address",
     type: "email",
-    icon: <Mail className="w-4 h-4 text-stone-500" />,
   },
   {
-    name: "password",
-    placeholder: "Enter password",
-    type: "password",
-    icon: <Lock className="w-4 h-4 text-stone-500" />,
+    name: "avatar",
+    placeholder: "Please choose an avatar",
+    type: "file",
+    accept: "image/*",
   },
 ];
 
-const LoginFields = () => {
-  const { control } = useFormContext<LoginForm>();
+const EditAccount = () => {
+  const { control } = useFormContext<EditUserForm>();
+
   return (
     <div className="space-y-4">
-      {userInfoFields.map(({ name, placeholder, type, icon }) => (
+      {userInfoFields.map(({ name, placeholder, type, accept }) => (
         <FormField
           key={name}
           control={control}
@@ -45,15 +48,19 @@ const LoginFields = () => {
             <FormItem>
               <FormControl>
                 <div className="relative mt-2">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2">
-                    {icon}
-                  </span>
                   <Input
                     type={type}
                     placeholder={placeholder}
-                    {...field}
-                    value={(field.value as string | undefined) ?? ""}
-                    onChange={(e) => field.onChange(e.target.value)}
+                    accept={accept}
+                    {...(type === "file"
+                      ? {
+                          onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                            field.onChange(e.target.files?.[0]),
+                        }
+                      : {
+                          value: field.value ?? "",
+                          onChange: field.onChange,
+                        })}
                     className="text-stone-800 pl-10 pr-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-400"
                   />
                 </div>
@@ -67,4 +74,4 @@ const LoginFields = () => {
   );
 };
 
-export default LoginFields;
+export default EditAccount;
