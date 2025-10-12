@@ -33,8 +33,6 @@ const Account = () => {
   const { email, name, avatar } = user ?? {};
   const { mutate: editUser } = useEditUser(() => setEditingUser(null));
 
-  console.log(editingUser);
-
   const [open, setOpen] = useState(false);
 
   const form = useForm<EditUserForm>({
@@ -54,7 +52,7 @@ const Account = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    toast.success("Logged out successfully");
+    toast("Logged out successfully");
     navigate("/");
   };
 

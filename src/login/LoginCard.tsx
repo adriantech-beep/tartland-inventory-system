@@ -74,13 +74,7 @@ const LoginCard = () => {
         </form>
       </FormProvider>
 
-      <div className="flex justify-between items-center mt-6 text-sm">
-        <p
-          style={{ fontFamily: "Poppins, sans-serif" }}
-          className="text-stone-700 hover:text-stone-900 transition-colors cursor-pointer"
-        >
-          Forgot password?
-        </p>
+      <div className="w-full flex items-center justify-center mt-6 text-sm">
         <p
           style={{ fontFamily: "Poppins, sans-serif" }}
           className="text-stone-700 hover:text-stone-900 transition-colors cursor-pointer"

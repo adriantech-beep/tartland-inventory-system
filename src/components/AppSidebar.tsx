@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   Sidebar,
   SidebarContent,
@@ -8,7 +8,6 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuBadge,
   SidebarMenuItem,
   SidebarSeparator,
 } from "@/components/ui/sidebar";
@@ -21,24 +20,19 @@ import {
   Blend,
   PackageSearch,
   Settings,
-  UserRound,
+  LogOutIcon,
 } from "lucide-react";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-} from "@radix-ui/react-dropdown-menu";
-import { DropdownMenuTrigger } from "./ui/dropdown-menu";
+import { toast } from "sonner";
+import { Button } from "./ui/button";
+import { useGetCompanyProfile } from "@/company-settings/useGetCompanyProfile";
 
 const sidebarGroups = [
   {
     label: "Menu",
     items: [
       { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
-      { title: "Settings", url: "/settings", icon: Settings },
+      { title: "Settings", url: "/company-settings", icon: Settings },
     ],
   },
   {
@@ -75,10 +69,10 @@ const SidebarLink = ({
   <NavLink
     to={to}
     className={({ isActive }) =>
-      `w-full flex items-center gap-3 px-3 py-2 rounded-md transition-colors hover:text-gray-700  ${
+      `w-full flex items-center gap-3 px-3 py-2 rounded-md transition-colors ${
         isActive
-          ? "bg-blue-500 text-gray-50  font-semibold"
-          : "text-muted-foreground hover:bg-muted/10"
+          ? "bg-blue-500 text-white font-semibold"
+          : "text-muted-foreground hover:bg-muted/10 hover:text-gray-800"
       }`
     }
   >
@@ -88,15 +82,37 @@ const SidebarLink = ({
 );
 
 const AppSidebar = () => {
+  const { data: companyProfile } = useGetCompanyProfile();
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    toast("Logged out successfully");
+    navigate("/");
+  };
+
   return (
     <Sidebar>
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <img src="/logo.png" alt="App Logo" className="h-8 w-8" />
-          </SidebarMenuItem>
-        </SidebarMenu>
+      <SidebarHeader className="p-4 flex flex-col items-center gap-2 border-b border-muted/30">
+        <div className="flex flex-col items-center gap-2">
+          <img
+            src={companyProfile?.avatar || "/placeholder-company.png"}
+            alt="Company Avatar"
+            className="h-12 w-12 rounded-full object-cover border border-gray-300 dark:border-gray-600"
+          />
+          <div className="text-center">
+            <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+              {companyProfile?.companyName || "Your Company"}
+            </p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              {companyProfile?.industry || "Set your profile"}
+            </p>
+          </div>
+        </div>
       </SidebarHeader>
+
       <SidebarSeparator />
 
       <SidebarContent>
@@ -106,18 +122,12 @@ const AppSidebar = () => {
             <SidebarGroupContent>
               <SidebarMenu>
                 {group.items.map((item) => (
-                  <SidebarMenuItem
-                    key={item.title}
-                    className="hover:bg-blue-200 rounded-md flex items-center"
-                  >
+                  <SidebarMenuItem key={item.title}>
                     <SidebarLink
                       to={item.url}
                       icon={item.icon}
                       title={item.title}
                     />
-                    {/* {item.title === "Orders" && (
-                      <SidebarMenuBadge>5</SidebarMenuBadge>
-                    )} */}
                   </SidebarMenuItem>
                 ))}
               </SidebarMenu>
@@ -128,20 +138,15 @@ const AppSidebar = () => {
 
       <SidebarSeparator />
 
-      <SidebarFooter>
-        <DropdownMenu>
-          <DropdownMenuTrigger className="flex items-center gap-2">
-            <UserRound />
-            <span>John Doe</span>
-          </DropdownMenuTrigger>
-
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Logout</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+      <SidebarFooter className="p-4">
+        <Button
+          onClick={handleLogout}
+          variant="ghost"
+          className="flex items-center gap-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950 w-full justify-center"
+        >
+          <LogOutIcon className="h-4 w-4" />
+          <span>Logout</span>
+        </Button>
       </SidebarFooter>
     </Sidebar>
   );

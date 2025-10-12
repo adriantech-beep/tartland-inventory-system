@@ -6,8 +6,6 @@ import { Button } from "./ui/button";
 const PopoverComponent = () => {
   return (
     <Popover>
-      {/* <PopoverTrigger asChild></PopoverTrigger> */}
-
       <PopoverContent
         align="start"
         className="w-80 p-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg"
@@ -29,11 +27,7 @@ const PopoverComponent = () => {
               >
                 Name
               </Label>
-              <Input
-                id="name"
-                // defaultValue={name || ""}
-                className="col-span-2 h-8"
-              />
+              <Input id="name" className="col-span-2 h-8" />
             </div>
             <div className="grid grid-cols-3 items-center gap-4">
               <Label
@@ -42,11 +36,7 @@ const PopoverComponent = () => {
               >
                 Email
               </Label>
-              <Input
-                id="email"
-                // defaultValue={email || ""}
-                className="col-span-2 h-8"
-              />
+              <Input id="email" className="col-span-2 h-8" />
             </div>
             <Button
               size="sm"
