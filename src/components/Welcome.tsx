@@ -7,11 +7,11 @@ const Welcome = () => {
   });
 
   return (
-    <div className=" flex flex-col gap-1.5">
-      <h1 className="text-3xl font-display font-bold text-stone-700">
+    <div className="flex flex-col gap-1.5">
+      <h1 className="text-3xl font-display font-bold text-stone-700 dark:text-stone-100">
         👋 Hello, Admin
       </h1>
-      <p className="text-sm font-sans text-stone-700 ml-1">
+      <p className="text-sm font-sans text-stone-700 dark:text-stone-300 ml-1">
         Today is <span className="italic">{today}</span>
       </p>
     </div>
