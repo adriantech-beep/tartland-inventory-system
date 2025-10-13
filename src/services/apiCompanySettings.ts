@@ -48,3 +48,29 @@ export const getCompanyProfile = async () => {
     return [];
   }
 };
+
+export const editCompanyProfile = async ({
+  id,
+  values,
+}: {
+  id: string;
+  values: CompanySettingsForm;
+}) => {
+  const formData = new FormData();
+
+  formData.append("companyName", values.companyName || "");
+
+  if (values.avatar instanceof File) {
+    formData.append("avatar", values.avatar);
+  }
+
+  const { data } = await axiosInstance.put(
+    `/api/company/edit-company-profile/${id}`,
+    formData,
+    {
+      headers: { "Content-Type": "multipart/form-data" },
+    }
+  );
+
+  return data;
+};
