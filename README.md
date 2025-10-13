@@ -1,6 +1,6 @@
 # 🏭 Production Tracking System – Mixture-Based Inventory
 
-A full-stack production tracking system designed to manage product output based on **mixtures**, deduct **raw materials** from inventory, and restore them upon deletion — all with precision and accuracy.
+A full-stack production tracking system designed to manage product output based on **mixtures**, deduct **raw materials** from inventory — all with precision and accuracy.
 
 ---
 
