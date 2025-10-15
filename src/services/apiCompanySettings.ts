@@ -1,7 +1,7 @@
 import type { CompanySettingsForm } from "@/company-settings/companySettingsSchema";
 import axiosInstance from "./axiosInstance";
 
-export const createCompanySettings = async (settings: CompanySettingsForm) => {
+export const createCompanyProfile = async (settings: CompanySettingsForm) => {
   try {
     const formData = new FormData();
 
