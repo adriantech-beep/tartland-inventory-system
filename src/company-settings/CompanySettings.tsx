@@ -5,12 +5,13 @@ import {
 } from "./companySettingsSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Card } from "@/components/ui/card";
-import { useCreateCompanySettings } from "./useCreateCompanySettings";
+
 import { Button } from "@/components/ui/button";
 import { useGetCompanyProfile } from "./useGetCompanyProfile";
 import { useState } from "react";
-import { useEditCompanyProfile } from "./useEditCompanySettings";
+import { useEditCompanyProfile } from "./useEditCompanyProfile";
 import CompanySettingsField from "./CompanySettingsField";
+import { useCreateCompanyProfile } from "./useCreateCompanyProfile";
 
 const CompanySettings = () => {
   const [editingCompanyProfile, setEditingCompanyProfile] =
@@ -19,7 +20,7 @@ const CompanySettings = () => {
   const { mutate: editCompanyProfile } = useEditCompanyProfile(() =>
     setEditingCompanyProfile(null)
   );
-  const { mutate: createCompanyProfile } = useCreateCompanySettings();
+  const { mutate: createCompanyProfile } = useCreateCompanyProfile();
   const { data: companyProfile } = useGetCompanyProfile();
   const [preview, setPreview] = useState<string | null>(null);
 

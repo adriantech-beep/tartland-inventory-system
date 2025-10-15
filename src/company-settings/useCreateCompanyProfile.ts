@@ -1,13 +1,13 @@
-import { createCompanySettings } from "@/services/apiCompanySettings";
+import { createCompanyProfile } from "@/services/apiCompanySettings";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import { toast } from "sonner";
 
-export const useCreateCompanySettings = () => {
+export const useCreateCompanyProfile = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: createCompanySettings,
+    mutationFn: createCompanyProfile,
     onSuccess: () => {
       toast("New company settings created");
       queryClient.invalidateQueries({ queryKey: ["company"] });
