@@ -1,11 +1,9 @@
-import axiosInstance from "./axiosInstance";
+import { apiRequest } from "./utils/apiHelper";
 
 export const getAvailableStock = async () => {
-  try {
-    const { data } = await axiosInstance.get("/api/available-stock");
-    return data.available;
-  } catch (err) {
-    console.error("Failed to fetch available stocks:", err);
-    return [];
-  }
+  const data = await apiRequest<{ available: any }>(
+    "get",
+    "/api/available-stock"
+  );
+  return data.available;
 };

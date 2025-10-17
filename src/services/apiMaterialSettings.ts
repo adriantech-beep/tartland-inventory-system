@@ -1,29 +1,17 @@
-import axiosInstance from "./axiosInstance";
 import type { MaterialSettingsForm } from "@/material-settings/materialSettingsSchema";
-import axios from "axios";
+import { apiRequest } from "./utils/apiHelper";
+import { objectToFormData } from "./utils/formDataHelper";
 
 export const createMaterialSettings = async (
   material: MaterialSettingsForm
 ) => {
-  try {
-    const { data } = await axiosInstance.post("/api/materials", material);
-    return data;
-  } catch (err: unknown) {
-    if (axios.isAxiosError(err)) {
-      throw err;
-    }
-    throw new Error("Unexpected error while creating production");
-  }
+  const data = await apiRequest("post", "/api/materials", material);
+  return data;
 };
 
 export const getMaterialSettings = async () => {
-  try {
-    const { data } = await axiosInstance.get("/api/materials");
-    return data.materials;
-  } catch (err) {
-    console.error("Failed to fetch material settings:", err);
-    return [];
-  }
+  const data = await apiRequest<{ materials: any }>("get", "/api/materials");
+  return data.materials;
 };
 
 export const updateMaterialSettings = async ({
@@ -33,11 +21,12 @@ export const updateMaterialSettings = async ({
   id: string;
   values: MaterialSettingsForm;
 }) => {
-  const { data } = await axiosInstance.put(`/api/materials/${id}`, values);
-  return data;
+  const formData = objectToFormData(values);
+
+  return apiRequest("put", `/api/materials/${id}`, formData);
 };
 
 export const deleteMaterialSetting = async (id: string) => {
-  const { data } = await axiosInstance.delete(`/api/materials/${id}`);
+  const data = await apiRequest("delete", `/api/materials/${id}`);
   return data;
 };

@@ -55,7 +55,10 @@ const AddProduct = () => {
     } else {
       createInboundLog(payload);
     }
-    reset();
+    reset({
+      rawMaterialDetails: {},
+      boxCount: "",
+    });
     setEditingInbound(null);
   };
 

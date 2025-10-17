@@ -1,4 +1,8 @@
-export const objectToFormData = (values: Record<string, any>): FormData => {
+export const objectToFormData = (
+  values: Record<string, any>
+): FormData | Record<string, any> => {
+  if (!values) return values;
+  let hasFile = null;
   const formData = new FormData();
 
   Object.entries(values).forEach(([key, value]) => {
@@ -10,5 +14,5 @@ export const objectToFormData = (values: Record<string, any>): FormData => {
     }
   });
 
-  return formData;
+  return hasFile ? formData : values;
 };

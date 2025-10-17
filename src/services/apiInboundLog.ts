@@ -1,35 +1,19 @@
-import axiosInstance from "./axiosInstance";
 import type { AddInboundPayload } from "@/production/utils/addProduct";
-import axios from "axios";
+import { apiRequest } from "./utils/apiHelper";
+import { objectToFormData } from "./utils/formDataHelper";
 
-export const createAddInboundLog = async (
-  inboundLog: AddInboundPayload
-): Promise<AddInboundPayload> => {
-  try {
-    const { data } = await axiosInstance.post<AddInboundPayload>(
-      "/api/inbound-log",
-      inboundLog
-    );
-    return data;
-  } catch (err: unknown) {
-    if (axios.isAxiosError(err)) {
-      throw err;
-    }
-    throw new Error("Unexpected error while creating production");
-  }
+export const createAddInboundLog = async (inboundLog: AddInboundPayload) => {
+  const data = await apiRequest("post", "/api/inbound-log", inboundLog);
+  return data;
 };
+
 export const getInboundLog = async () => {
-  try {
-    const { data } = await axiosInstance.get("/api/inbound-log");
-    return data.inboundLog;
-  } catch (err) {
-    console.error("Failed to fetch inventory for inbound logs:", err);
-    return [];
-  }
+  const data = await apiRequest<{ inboundLog: any }>("get", "/api/inbound-log");
+  return data.inboundLog;
 };
 
 export const deleteInboundLog = async (id: string) => {
-  const { data } = await axiosInstance.delete(`/api/inbound-log/${id}`);
+  const data = await apiRequest("delete", `/api/inbound-log/${id}`);
   return data;
 };
 
@@ -40,6 +24,7 @@ export const editInboundLog = async ({
   id: string;
   payload: AddInboundPayload;
 }) => {
-  const { data } = await axiosInstance.put(`/api/inbound-log/${id}`, payload);
-  return data;
+  const formData = objectToFormData(payload);
+
+  return apiRequest("put", `/api/inbound-log/${id}`, formData);
 };

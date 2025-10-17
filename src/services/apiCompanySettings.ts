@@ -1,52 +1,18 @@
 import type { CompanySettingsForm } from "@/company-settings/companySettingsSchema";
-import axiosInstance from "./axiosInstance";
+import { objectToFormData } from "./utils/formDataHelper";
+import { apiRequest } from "./utils/apiHelper";
 
 export const createCompanyProfile = async (settings: CompanySettingsForm) => {
-  try {
-    const formData = new FormData();
-
-    if (settings.companyName)
-      formData.append("companyName", settings.companyName);
-    if (settings.avatar instanceof File)
-      formData.append("avatar", settings.avatar);
-
-    const { data } = await axiosInstance.post(
-      "/api/company/create-company-profile",
-      formData,
-      {
-        headers: { "Content-Type": "multipart/form-data" },
-      }
-    );
-
-    return data;
-  } catch (error: any) {
-    if (error.response) {
-      console.error("Server responded with an error:", error.response.data);
-      console.error("Status code:", error.response.status);
-      throw new Error(
-        error.response.data?.message ||
-          `Request failed with status ${error.response.status}`
-      );
-    } else if (error.request) {
-      console.error("No response received from server:", error.request);
-      throw new Error("No response received from the server");
-    } else {
-      console.error("Error in request setup:", error.message);
-      throw new Error(error.message);
-    }
-  }
+  const formData = objectToFormData(settings);
+  return apiRequest("post", "/api/company/create-company-profile", formData);
 };
 
 export const getCompanyProfile = async () => {
-  try {
-    const { data } = await axiosInstance.get(
-      "/api/company/get-company-profile"
-    );
-    return data.companySettings;
-  } catch (err) {
-    console.error("Failed to fetch company profile:", err);
-    return [];
-  }
+  const data = await apiRequest<{ companySettings: any }>(
+    "get",
+    "/api/company/get-company-profile"
+  );
+  return data.companySettings;
 };
 
 export const editCompanyProfile = async ({
@@ -56,21 +22,6 @@ export const editCompanyProfile = async ({
   id: string;
   values: CompanySettingsForm;
 }) => {
-  const formData = new FormData();
-
-  formData.append("companyName", values.companyName || "");
-
-  if (values.avatar instanceof File) {
-    formData.append("avatar", values.avatar);
-  }
-
-  const { data } = await axiosInstance.put(
-    `/api/company/edit-company-profile/${id}`,
-    formData,
-    {
-      headers: { "Content-Type": "multipart/form-data" },
-    }
-  );
-
-  return data;
+  const formData = objectToFormData(values);
+  return apiRequest("put", `/api/company/edit-company-profile/${id}`, formData);
 };
