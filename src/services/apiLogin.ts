@@ -1,9 +1,9 @@
 import type { EditUserForm } from "@/account/editUserSchema";
-import axiosInstance from "./axiosInstance";
+import { apiRequest } from "./utils/apiHelper";
+import { objectToFormData } from "./utils/formDataHelper";
 
-export const loginUser = async (user: unknown) => {
-  const { data } = await axiosInstance.post("/api/auth/user-login", user);
-
+export const loginUser = async (user: any) => {
+  const data = await apiRequest("post", "/api/auth/user-login", user);
   return data;
 };
 
@@ -14,19 +14,7 @@ export const editUser = async ({
   id: string;
   values: EditUserForm;
 }) => {
-  const formData = new FormData();
+  const formData = objectToFormData(values);
 
-  if (values.name) formData.append("name", values.name);
-  if (values.email) formData.append("email", values.email);
-  if (values.avatar instanceof File) formData.append("avatar", values.avatar);
-
-  const { data } = await axiosInstance.put(
-    `/api/auth/user-update/${id}`,
-    formData,
-    {
-      headers: { "Content-Type": "multipart/form-data" },
-    }
-  );
-
-  return data;
+  return apiRequest("put", `/api/auth/user-update/${id}`, formData);
 };
